@@ -11,6 +11,11 @@ const fontSans = Geist({
 
 const geistMono = Geist_Mono({subsets:['latin'],variable:'--font-mono'})
 
+export const metadata = {
+  title: "1909",
+  description: "竹科潤隆 A 棟 19 樓之 9",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="zh-TW"
       suppressHydrationWarning
       className={cn("antialiased", fontSans.variable, "font-mono", geistMono.variable)}
     >

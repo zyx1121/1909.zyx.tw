@@ -1,19 +1,62 @@
-import { Button } from "@/components/ui/button"
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+import { calculateDebts } from "@/lib/calc"
+import type { Member, Expense } from "@/lib/types"
+import { UserNav } from "@/components/user-nav"
+import { BalanceSummary } from "@/components/balance-summary"
+import { ExpenseForm } from "@/components/expense-form"
+import { ExpenseList } from "@/components/expense-list"
+import { Separator } from "@/components/ui/separator"
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) redirect("/auth/login")
+
+  const { data: members } = await supabase
+    .from("members")
+    .select("*")
+    .returns<Member[]>()
+
+  const { data: expenses } = await supabase
+    .from("expenses")
+    .select("*, member:members(*)")
+    .order("created_at", { ascending: false })
+    .returns<Expense[]>()
+
+  const currentMember = members?.find((m) => m.email === user.email)
+  if (!currentMember) redirect("/auth/login")
+
+  const unsettled = (expenses ?? []).filter((e) => !e.settled)
+  const debts = calculateDebts(unsettled, members ?? [])
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <div className="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
+      <div className="flex items-center justify-between">
+        <h1 className="font-medium">1909</h1>
+        <UserNav name={currentMember.name} />
       </div>
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-sm text-muted-foreground">欠款摘要</h2>
+        <BalanceSummary debts={debts} />
+      </section>
+
+      <Separator />
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-sm text-muted-foreground">新增支出</h2>
+        <ExpenseForm />
+      </section>
+
+      <Separator />
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-sm text-muted-foreground">支出紀錄</h2>
+        <ExpenseList expenses={expenses ?? []} />
+      </section>
     </div>
   )
 }
