@@ -33,10 +33,13 @@ export default async function Page() {
   const debts = calculateDebts(unsettled, members ?? [])
 
   return (
-    <div className="mx-auto flex min-h-svh max-w-lg flex-col gap-6 p-6">
+    <div className="mx-auto flex min-h-svh max-w-2xl flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <h1 className="font-medium">1909</h1>
-        <UserNav name={currentMember.name} />
+        <div className="flex items-center gap-3">
+          <ExpenseForm />
+          <UserNav name={currentMember.name} />
+        </div>
       </div>
 
       <section className="flex flex-col gap-2">
@@ -47,15 +50,8 @@ export default async function Page() {
       <Separator />
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-sm text-muted-foreground">新增支出</h2>
-        <ExpenseForm />
-      </section>
-
-      <Separator />
-
-      <section className="flex flex-col gap-2">
         <h2 className="text-sm text-muted-foreground">支出紀錄</h2>
-        <ExpenseList expenses={expenses ?? []} />
+        <ExpenseList expenses={expenses ?? []} currentMemberId={currentMember.id} />
       </section>
     </div>
   )

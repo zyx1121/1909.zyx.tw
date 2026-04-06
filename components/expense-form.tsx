@@ -1,30 +1,44 @@
 "use client"
 
-import { useRef } from "react"
-import { addExpense } from "@/app/actions"
+import { useExpenseForm } from "@/hooks/use-expense-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export function ExpenseForm() {
-  const formRef = useRef<HTMLFormElement>(null)
-
-  async function handleSubmit(formData: FormData) {
-    await addExpense(formData)
-    formRef.current?.reset()
-  }
+  const { formRef, open, setOpen, handleSubmit } = useExpenseForm()
 
   return (
-    <form ref={formRef} action={handleSubmit} className="flex gap-2">
-      <Input name="title" placeholder="項目名稱" required className="flex-1" />
-      <Input
-        name="amount"
-        type="number"
-        placeholder="金額"
-        min={1}
-        required
-        className="w-28"
-      />
-      <Button type="submit">新增</Button>
-    </form>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="sm">
+          新增支出
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>新增支出</DialogTitle>
+        </DialogHeader>
+        <form ref={formRef} action={handleSubmit} className="flex flex-col gap-4">
+          <Input name="title" placeholder="項目名稱" required />
+          <Input
+            name="amount"
+            type="number"
+            placeholder="金額"
+            min={1}
+            required
+          />
+          <Button type="submit" className="self-end">
+            新增
+          </Button>
+        </form>
+      </DialogContent>
+    </Dialog>
   )
 }

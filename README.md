@@ -1,21 +1,39 @@
-# Next.js template
+```
+ ██╗ █████╗  ██████╗  █████╗ 
+███║██╔══██╗██╔═████╗██╔══██╗
+╚██║╚██████║██║██╔██║╚██████║
+ ██║ ╚═══██║████╔╝██║ ╚═══██║
+ ██║ █████╔╝╚██████╔╝ █████╔╝
+ ╚═╝ ╚════╝  ╚═════╝  ╚════╝
+```
 
-This is a Next.js template with shadcn/ui.
+# 1909
 
-## Adding components
+竹科潤隆 A 棟 19 樓之 9 — 三人合租帳務 Dashboard。
 
-To add components to your app, run the following command:
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Backend**: Supabase
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Package Manager**: Bun
+
+## Getting Started
 
 ```bash
-npx shadcn@latest add button
+bun install
+bun dev
 ```
 
-This will place the ui components in the `components` directory.
+## Environment Variables
 
-## Using components
+Create a `.env.local` file:
 
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button";
 ```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-anon-key
+```
+
+## License
+
+[MIT](LICENSE.md) — 室友不還錢就開源他的帳

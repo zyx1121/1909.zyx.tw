@@ -52,6 +52,28 @@ export async function toggleSettle(expenseId: number) {
   revalidatePath("/")
 }
 
+export async function updateExpense(expenseId: number, title: string, amount: number) {
+  const supabase = await createClient()
+
+  await supabase
+    .from("expenses")
+    .update({ title, amount })
+    .eq("id", expenseId)
+
+  revalidatePath("/")
+}
+
+export async function deleteExpense(expenseId: number) {
+  const supabase = await createClient()
+
+  await supabase
+    .from("expenses")
+    .delete()
+    .eq("id", expenseId)
+
+  revalidatePath("/")
+}
+
 export async function signOut() {
   const supabase = await createClient()
   await supabase.auth.signOut()

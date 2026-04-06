@@ -16,7 +16,7 @@ export function BalanceSummary({ debts }: { debts: Debt[] }) {
     <div className="grid gap-2">
       {debts.map((debt, i) => (
         <Card key={i}>
-          <CardContent className="flex items-center justify-between py-3">
+          <CardContent className="flex items-center justify-between px-4 py-2">
             <span className="text-sm">
               <span className="font-medium">{debt.from}</span>
               {" 欠 "}
