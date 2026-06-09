@@ -9,7 +9,7 @@
 
 # 1909
 
-竹科潤隆 A 棟 19 樓之 9 — 三人合租帳務 Dashboard。
+Hsinchu Science Park, Run Long Bldg A, Unit 19F-9 — a shared-expense dashboard for three flatmates.
 
 ## Tech Stack
 
@@ -36,4 +36,4 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-anon-key
 
 ## License
 
-[MIT](LICENSE.md) — 室友不還錢就開源他的帳
+[MIT](LICENSE.md) — if a flatmate won't pay up, his tab goes open source.
